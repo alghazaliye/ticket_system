@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تقرير أداء الوكلاء</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+            direction: rtl;
+        }
+        .report-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .report-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .report-subtitle {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        .report-summary {
+            margin-bottom: 30px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        .summary-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .summary-row {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+        .summary-item {
+            flex: 1 0 25%;
+            margin-bottom: 10px;
+        }
+        .summary-label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .summary-value {
+            color: #1a73e8;
+        }
+        .report-section {
+            margin-bottom: 30px;
+        }
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #dee2e6;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #dee2e6;
+            padding: 8px 12px;
+            text-align: right;
+        }
+        th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .chart-container {
+            margin-bottom: 30px;
+        }
+        .footer {
+            margin-top: 50px;
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="report-header">
+        <div class="report-title">تقرير أداء الوكلاء</div>
+        <div class="report-subtitle">
+            الفترة: {{ report.from_date|date }} إلى {{ report.to_date|date }}
+        </div>
+        <div class="report-subtitle">
+            تاريخ التقرير: {{ frappe.utils.now()|date }}
+        </div>
+    </div>
+
+    <div class="report-summary">
+        <div class="summary-title">ملخص أداء الوكلاء</div>
+        <div class="summary-row">
+            <div class="summary-item">
+                <div class="summary-label">عدد الوكلاء</div>
+                <div class="summary-value">{{ report.total_agents }}</div>
+            </div>
+            <div class="summary-item">
+                <div class="summary-label">إجمالي الحجوزات</div>
+                <div class="summary-value">{{ report.total_bookings }}</div>
+            </div>
+            <div class="summary-item">
+                <div class="summary-label">إجمالي التذاكر</div>
+                <div class="summary-value">{{ report.total_tickets }}</div>
+            </div>
+            <div class="summary-item">
+                <div class="summary-label">إجمالي المبيعات</div>
+                <div class="summary-value">{{ report.total_sales }}</div>
+            </div>
+        </div>
+        <div class="summary-row">
+            <div class="summary-item">
+                <div class="summary-label">إجمالي العمولات</div>
+                <div class="summary-value">{{ report.total_commission }}</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="report-section">
+        <div class="section-title">أداء الوكلاء</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>اسم الوكيل</th>
+                    <th>رمز الوكيل</th>
+                    <th>نوع الوكيل</th>
+                    <th>نسبة العمولة</th>
+                    <th>عدد الحجوزات</th>
+                    <th>عدد التذاكر</th>
+                    <th>إجمالي المبيعات</th>
+                    <th>إجمالي العمولات</th>
+                    <th>إجمالي المدفوعات</th>
+                    <th>الرصيد الحالي</th>
+                    <th>الحالة</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for agent in report.agent_performance %}
+                <tr>
+                    <td>{{ agent.agent_name }}</td>
+                    <td>{{ agent.agent_code }}</td>
+                    <td>{{ agent.agent_type }}</td>
+                    <td>{{ agent.commission_rate }}%</td>
+                    <td>{{ agent.total_bookings }}</td>
+                    <td>{{ agent.total_tickets }}</td>
+                    <td>{{ agent.total_sales }}</td>
+                    <td>{{ agent.total_commission }}</td>
+                    <td>{{ agent.total_payments }}</td>
+                    <td>{{ agent.current_balance }}</td>
+                    <td>{{ agent.status }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="footer">
+        <p>تم إنشاء هذا التقرير بواسطة نظام حجز التذاكر</p>
+    </div>
+</body>
+</html>

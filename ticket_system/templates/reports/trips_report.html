@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تقرير الرحلات</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+            direction: rtl;
+        }
+        .report-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .report-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .report-subtitle {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        .report-summary {
+            margin-bottom: 30px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        .summary-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .summary-row {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+        .summary-item {
+            flex: 1 0 25%;
+            margin-bottom: 10px;
+        }
+        .summary-label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .summary-value {
+            color: #1a73e8;
+        }
+        .report-section {
+            margin-bottom: 30px;
+        }
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #dee2e6;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #dee2e6;
+            padding: 8px 12px;
+            text-align: right;
+        }
+        th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .chart-container {
+            margin-bottom: 30px;
+        }
+        .footer {
+            margin-top: 50px;
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="report-header">
+        <div class="report-title">تقرير الرحلات</div>
+        <div class="report-subtitle">
+            الفترة: {{ report.from_date|date }} إلى {{ report.to_date|date }}
+        </div>
+        <div class="report-subtitle">
+            تاريخ التقرير: {{ frappe.utils.now()|date }}
+        </div>
+    </div>
+
+    <div class="report-summary">
+        <div class="summary-title">ملخص الرحلات</div>
+        <div class="summary-row">
+            <div class="summary-item">
+                <div class="summary-label">إجمالي الرحلات</div>
+                <div class="summary-value">{{ report.total_trips }}</div>
+            </div>
+            <div class="summary-item">
+                <div class="summary-label">إجمالي المقاعد</div>
+                <div class="summary-value">{{ report.total_seats }}</div>
+            </div>
+            <div class="summary-item">
+                <div class="summary-label">التذاكر المباعة</div>
+                <div class="summary-value">{{ report.total_sold_tickets }}</div>
+            </div>
+            <div class="summary-item">
+                <div class="summary-label">إجمالي المبيعات</div>
+                <div class="summary-value">{{ report.total_sales }}</div>
+            </div>
+        </div>
+        <div class="summary-row">
+            <div class="summary-item">
+                <div class="summary-label">متوسط نسبة الإشغال</div>
+                <div class="summary-value">{{ "%.2f"|format(report.avg_occupancy_rate) }}%</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="report-section">
+        <div class="section-title">الرحلات حسب المسار</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>المسار</th>
+                    <th>عدد الرحلات</th>
+                    <th>التذاكر المباعة</th>
+                    <th>إجمالي المبيعات</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for route, data in report.trips_by_route.items() %}
+                <tr>
+                    <td>{{ route }}</td>
+                    <td>{{ data.count }}</td>
+                    <td>{{ data.sold_tickets }}</td>
+                    <td>{{ data.total_sales }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="report-section">
+        <div class="section-title">الرحلات حسب التاريخ</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>التاريخ</th>
+                    <th>عدد الرحلات</th>
+                    <th>التذاكر المباعة</th>
+                    <th>إجمالي المبيعات</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for date, data in report.trips_by_date.items() %}
+                <tr>
+                    <td>{{ date }}</td>
+                    <td>{{ data.count }}</td>
+                    <td>{{ data.sold_tickets }}</td>
+                    <td>{{ data.total_sales }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="report-section">
+        <div class="section-title">الرحلات حسب نوع المركبة</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>نوع المركبة</th>
+                    <th>عدد الرحلات</th>
+                    <th>التذاكر المباعة</th>
+                    <th>إجمالي المبيعات</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for vehicle_type, data in report.trips_by_vehicle_type.items() %}
+                <tr>
+                    <td>{{ vehicle_type }}</td>
+                    <td>{{ data.count }}</td>
+                    <td>{{ data.sold_tickets }}</td>
+                    <td>{{ data.total_sales }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="report-section">
+        <div class="section-title">تفاصيل الرحلات</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>رقم الرحلة</th>
+                    <th>المسار</th>
+                    <th>التاريخ</th>
+                    <th>وقت المغادرة</th>
+                    <th>وقت الوصول</th>
+                    <th>نوع المركبة</th>
+                    <th>المقاعد الكلية</th>
+                    <th>التذاكر المباعة</th>
+                    <th>المقاعد المتاحة</th>
+                    <th>نسبة الإشغال</th>
+                    <th>السعر</th>
+                    <th>إجمالي المبيعات</th>
+                    <th>الحالة</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for trip in report.details %}
+                <tr>
+                    <td>{{ trip.trip_code }}</td>
+                    <td>{{ trip.from_city }} - {{ trip.to_city }}</td>
+                    <td>{{ trip.trip_date|date }}</td>
+                    <td>{{ trip.departure_time }}</td>
+                    <td>{{ trip.arrival_time }}</td>
+                    <td>{{ trip.vehicle_type }}</td>
+                    <td>{{ trip.total_seats }}</td>
+                    <td>{{ trip.sold_tickets }}</td>
+                    <td>{{ trip.available_seats }}</td>
+                    <td>{{ "%.2f"|format(trip.occupancy_rate) }}%</td>
+                    <td>{{ trip.price }}</td>
+                    <td>{{ trip.total_sales }}</td>
+                    <td>{{ trip.status }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="footer">
+        <p>تم إنشاء هذا التقرير بواسطة نظام حجز التذاكر</p>
+    </div>
+</body>
+</html>

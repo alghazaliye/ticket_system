@@ -1,0 +1,87 @@
+{
+ "doctype": "DocType",
+ "name": "City",
+ "module": "Ticket System",
+ "custom": 0,
+ "autoname": "field:city_name",
+ "naming_rule": "By fieldname",
+ "title_field": "city_name",
+ "search_fields": "city_name,city_code,country",
+ "allow_rename": 1,
+ "is_submittable": 0,
+ "is_tree": 0,
+ "track_changes": 1,
+ "track_seen": 0,
+ "fields": [
+  {
+   "fieldname": "city_name",
+   "fieldtype": "Data",
+   "label": "اسم المدينة",
+   "reqd": 1,
+   "unique": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "city_code",
+   "fieldtype": "Data",
+   "label": "رمز المدينة",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "country",
+   "fieldtype": "Data",
+   "label": "الدولة",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "is_active",
+   "fieldtype": "Check",
+   "label": "نشط",
+   "default": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Text Editor",
+   "label": "وصف"
+  }
+ ],
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "export": 1,
+   "import": 1
+  },
+  {
+   "role": "Ticket Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "export": 1
+  },
+  {
+   "role": "Ticket Agent",
+   "read": 1,
+   "export": 1
+  },
+  {
+   "role": "Booking Staff",
+   "read": 1,
+   "export": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "quick_entry": 1,
+ "track_views": 0
+}

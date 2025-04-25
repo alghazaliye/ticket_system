@@ -1,0 +1,45 @@
+{% extends "templates/web.html" %}
+
+{% block title %}إدارة التذاكر{% endblock %}
+
+{% block page_content %}
+<div class="ticket-system-container">
+    <div class="ticket-system-card">
+        <div class="ticket-system-header">
+            <div class="ticket-system-title">البحث عن تذكرة</div>
+            <div class="ticket-system-subtitle">أدخل رقم التذكرة للبحث عنها</div>
+        </div>
+        
+        <div class="ticket-system-form">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="ticket-system-form-group">
+                        <label class="ticket-system-label" for="ticket-number">رقم التذكرة</label>
+                        <input type="text" class="ticket-system-input" id="ticket-number" placeholder="أدخل رقم التذكرة" required>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="ticket-system-form-group">
+                        <label class="ticket-system-label">&nbsp;</label>
+                        <button id="ticket-search-btn" class="ticket-system-btn ticket-system-btn-primary">بحث</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="alert-container"></div>
+    
+    <div id="ticket-details"></div>
+    
+    <div id="cancel-ticket-form" style="display: none;"></div>
+</div>
+{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="/assets/ticket_system/css/ticket_system.css">
+{% endblock %}
+
+{% block script %}
+<script src="/assets/ticket_system/js/ticket_system.js"></script>
+{% endblock %}

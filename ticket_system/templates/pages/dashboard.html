@@ -1,0 +1,71 @@
+{% extends "templates/web.html" %}
+
+{% block title %}لوحة التحكم{% endblock %}
+
+{% block page_content %}
+<div class="ticket-system-container">
+    <div class="ticket-system-card">
+        <div class="ticket-system-header">
+            <div class="ticket-system-title">لوحة التحكم</div>
+            <div class="ticket-system-subtitle">
+                <div class="row">
+                    <div class="col-md-6">
+                        <span class="current-date"></span> | <span class="current-time"></span>
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <select id="period-selector" class="ticket-system-select">
+                            <option value="today">اليوم</option>
+                            <option value="yesterday">أمس</option>
+                            <option value="this_week">هذا الأسبوع</option>
+                            <option value="this_month">هذا الشهر</option>
+                            <option value="last_month">الشهر الماضي</option>
+                            <option value="this_year">هذه السنة</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="sales-stats" class="dashboard-widget"></div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-6">
+            <div id="sales-chart-container" class="ticket-system-card">
+                <div class="ticket-system-header">
+                    <div class="ticket-system-title">المبيعات</div>
+                </div>
+                <canvas id="sales-chart"></canvas>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div id="routes-chart-container" class="ticket-system-card">
+                <div class="ticket-system-header">
+                    <div class="ticket-system-title">المسارات الأكثر طلباً</div>
+                </div>
+                <canvas id="routes-chart"></canvas>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-6">
+            <div id="upcoming-trips" class="dashboard-widget"></div>
+        </div>
+        <div class="col-md-6">
+            <div id="recent-bookings" class="dashboard-widget"></div>
+        </div>
+    </div>
+    
+    <div id="agent-performance" class="dashboard-widget"></div>
+</div>
+{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="/assets/ticket_system/css/ticket_system.css">
+{% endblock %}
+
+{% block script %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="/assets/ticket_system/js/ticket_system.js"></script>
+{% endblock %}

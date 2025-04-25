@@ -1,0 +1,130 @@
+{% extends "templates/web.html" %}
+
+{% block title %}حجز تذكرة{% endblock %}
+
+{% block page_content %}
+<div class="ticket-system-container">
+    <div id="trip-details"></div>
+    
+    <div id="alert-container"></div>
+    
+    <div class="row">
+        <div class="col-md-8">
+            <div class="ticket-system-card">
+                <div class="ticket-system-header">
+                    <div class="ticket-system-title">اختر المقاعد</div>
+                    <div class="ticket-system-subtitle">انقر على المقاعد المتاحة لتحديدها</div>
+                </div>
+                
+                <div id="seat-map"></div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="ticket-system-card">
+                <div class="ticket-system-header">
+                    <div class="ticket-system-title">ملخص الحجز</div>
+                </div>
+                
+                <div class="ticket-system-booking-summary">
+                    <div class="summary-item">
+                        <div class="summary-label">المقاعد المحددة</div>
+                        <div class="summary-value"><span id="selected-seats-count">0</span></div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-label">المبلغ الإجمالي</div>
+                        <div class="summary-value"><span id="total-amount">0</span> <span id="currency"></span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="booking-form-container">
+        <form id="booking-form" class="ticket-system-form">
+            <input type="hidden" id="trip-id" name="trip_id">
+            <input type="hidden" id="trip-price" name="trip_price">
+            <input type="hidden" id="trip-currency" name="trip_currency">
+            
+            <div class="ticket-system-card">
+                <div class="ticket-system-header">
+                    <div class="ticket-system-title">بيانات العميل</div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="ticket-system-form-group">
+                            <label class="ticket-system-label" for="customer-id">العميل</label>
+                            <select class="ticket-system-select" id="customer-id" name="customer_id" required>
+                                <option value="">اختر العميل</option>
+                                {% for customer in customers %}
+                                <option value="{{ customer.name }}">{{ customer.customer_name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="ticket-system-form-group">
+                            <label class="ticket-system-label" for="agent-id">الوكيل</label>
+                            <select class="ticket-system-select" id="agent-id" name="agent_id">
+                                <option value="">اختر الوكيل (اختياري)</option>
+                                {% for agent in agents %}
+                                <option value="{{ agent.name }}">{{ agent.agent_name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="passenger-forms"></div>
+            
+            <div class="ticket-system-card">
+                <div class="ticket-system-header">
+                    <div class="ticket-system-title">بيانات الدفع</div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="ticket-system-form-group">
+                            <label class="ticket-system-label" for="payment-method">طريقة الدفع</label>
+                            <select class="ticket-system-select" id="payment-method" name="payment_method" required>
+                                <option value="">اختر طريقة الدفع</option>
+                                <option value="نقداً">نقداً</option>
+                                <option value="بطاقة ائتمان">بطاقة ائتمان</option>
+                                <option value="تحويل بنكي">تحويل بنكي</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="ticket-system-form-group">
+                            <label class="ticket-system-label" for="paid-amount">المبلغ المدفوع</label>
+                            <input type="number" class="ticket-system-input" id="paid-amount" name="paid_amount" min="0" step="0.01">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="ticket-system-form-group">
+                    <label class="ticket-system-label" for="booking-notes">ملاحظات</label>
+                    <textarea class="ticket-system-input" id="booking-notes" name="notes" rows="3"></textarea>
+                </div>
+                
+                <div class="ticket-system-form-actions">
+                    <button type="submit" class="ticket-system-btn ticket-system-btn-primary">تأكيد الحجز</button>
+                    <a href="/ticket-system/trip-search" class="ticket-system-btn ticket-system-btn-secondary">إلغاء</a>
+                </div>
+            </div>
+        </form>
+    </div>
+    
+    <div id="booking-result"></div>
+</div>
+{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="/assets/ticket_system/css/ticket_system.css">
+{% endblock %}
+
+{% block script %}
+<script src="/assets/ticket_system/js/ticket_system.js"></script>
+{% endblock %}

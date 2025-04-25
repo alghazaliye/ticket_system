@@ -1,0 +1,327 @@
+/* نظام حجز التذاكر - الأنماط الرئيسية */
+
+:root {
+  --primary-color: #1a73e8;
+  --secondary-color: #34a853;
+  --danger-color: #ea4335;
+  --warning-color: #fbbc05;
+  --light-color: #f8f9fa;
+  --dark-color: #343a40;
+  --gray-color: #6c757d;
+  --border-color: #dee2e6;
+  --box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+/* أنماط عامة */
+.ticket-system-container {
+  direction: rtl;
+  font-family: 'Tajawal', sans-serif;
+  padding: 15px;
+}
+
+.ticket-system-card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: var(--box-shadow);
+  margin-bottom: 20px;
+  padding: 20px;
+}
+
+.ticket-system-header {
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+}
+
+.ticket-system-title {
+  color: var(--primary-color);
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.ticket-system-subtitle {
+  color: var(--gray-color);
+  font-size: 1rem;
+  margin-bottom: 5px;
+}
+
+/* أنماط النماذج */
+.ticket-system-form-group {
+  margin-bottom: 15px;
+}
+
+.ticket-system-label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.ticket-system-input,
+.ticket-system-select {
+  background-color: white;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 8px 12px;
+  width: 100%;
+}
+
+.ticket-system-input:focus,
+.ticket-system-select:focus {
+  border-color: var(--primary-color);
+  outline: none;
+}
+
+/* أنماط الأزرار */
+.ticket-system-btn {
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  padding: 8px 16px;
+  transition: background-color 0.3s;
+}
+
+.ticket-system-btn-primary {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.ticket-system-btn-primary:hover {
+  background-color: #1557b0;
+}
+
+.ticket-system-btn-secondary {
+  background-color: var(--secondary-color);
+  color: white;
+}
+
+.ticket-system-btn-secondary:hover {
+  background-color: #2d8e47;
+}
+
+.ticket-system-btn-danger {
+  background-color: var(--danger-color);
+  color: white;
+}
+
+.ticket-system-btn-danger:hover {
+  background-color: #c5342a;
+}
+
+/* أنماط الجداول */
+.ticket-system-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.ticket-system-table th,
+.ticket-system-table td {
+  border: 1px solid var(--border-color);
+  padding: 10px;
+  text-align: right;
+}
+
+.ticket-system-table th {
+  background-color: var(--light-color);
+  font-weight: bold;
+}
+
+.ticket-system-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.ticket-system-table tr:hover {
+  background-color: #e9ecef;
+}
+
+/* أنماط البطاقات */
+.ticket-system-trip-card {
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  margin-bottom: 15px;
+  padding: 15px;
+  transition: box-shadow 0.3s;
+}
+
+.ticket-system-trip-card:hover {
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.ticket-system-trip-header {
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+}
+
+.ticket-system-trip-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.ticket-system-trip-price {
+  color: var(--primary-color);
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.ticket-system-trip-details {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.ticket-system-trip-detail {
+  flex: 1 0 50%;
+  margin-bottom: 5px;
+}
+
+.ticket-system-trip-detail-label {
+  color: var(--gray-color);
+  font-size: 0.9rem;
+}
+
+.ticket-system-trip-detail-value {
+  font-weight: bold;
+}
+
+.ticket-system-trip-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* أنماط مخطط المقاعد */
+.ticket-system-seat-map {
+  display: grid;
+  gap: 5px;
+  grid-template-columns: repeat(4, 1fr);
+  margin: 20px 0;
+}
+
+.ticket-system-seat {
+  background-color: var(--light-color);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 10px;
+  text-align: center;
+}
+
+.ticket-system-seat-available {
+  background-color: var(--secondary-color);
+  color: white;
+}
+
+.ticket-system-seat-selected {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.ticket-system-seat-unavailable {
+  background-color: var(--gray-color);
+  color: white;
+  cursor: not-allowed;
+}
+
+/* أنماط الإشعارات */
+.ticket-system-alert {
+  border-radius: 4px;
+  margin-bottom: 15px;
+  padding: 10px 15px;
+}
+
+.ticket-system-alert-success {
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+  color: #155724;
+}
+
+.ticket-system-alert-danger {
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  color: #721c24;
+}
+
+.ticket-system-alert-warning {
+  background-color: #fff3cd;
+  border: 1px solid #ffeeba;
+  color: #856404;
+}
+
+.ticket-system-alert-info {
+  background-color: #d1ecf1;
+  border: 1px solid #bee5eb;
+  color: #0c5460;
+}
+
+/* أنماط التذاكر */
+.ticket-system-ticket {
+  background-color: white;
+  border: 2px dashed var(--primary-color);
+  border-radius: 8px;
+  margin-bottom: 20px;
+  padding: 20px;
+  position: relative;
+}
+
+.ticket-system-ticket-header {
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+}
+
+.ticket-system-ticket-title {
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+.ticket-system-ticket-number {
+  color: var(--primary-color);
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.ticket-system-ticket-details {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.ticket-system-ticket-detail {
+  flex: 1 0 50%;
+  margin-bottom: 10px;
+}
+
+.ticket-system-ticket-qr {
+  margin: 15px auto;
+  max-width: 150px;
+}
+
+.ticket-system-ticket-footer {
+  border-top: 1px solid var(--border-color);
+  color: var(--gray-color);
+  font-size: 0.9rem;
+  margin-top: 15px;
+  padding-top: 10px;
+  text-align: center;
+}
+
+/* أنماط للشاشات الصغيرة */
+@media (max-width: 768px) {
+  .ticket-system-trip-details,
+  .ticket-system-ticket-details {
+    flex-direction: column;
+  }
+  
+  .ticket-system-trip-detail,
+  .ticket-system-ticket-detail {
+    flex: 1 0 100%;
+  }
+  
+  .ticket-system-seat-map {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

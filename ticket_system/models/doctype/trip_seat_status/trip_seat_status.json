@@ -1,0 +1,116 @@
+{
+ "doctype": "DocType",
+ "name": "Trip Seat Status",
+ "module": "Ticket System",
+ "custom": 0,
+ "autoname": "field:trip_seat_id",
+ "naming_rule": "By fieldname",
+ "title_field": "trip_seat_id",
+ "search_fields": "trip,seat,status",
+ "allow_rename": 0,
+ "is_submittable": 0,
+ "is_tree": 0,
+ "track_changes": 1,
+ "track_seen": 0,
+ "fields": [
+  {
+   "fieldname": "trip_seat_id",
+   "fieldtype": "Data",
+   "label": "معرف المقعد في الرحلة",
+   "reqd": 1,
+   "unique": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "trip",
+   "fieldtype": "Link",
+   "label": "الرحلة",
+   "options": "Trip",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "seat",
+   "fieldtype": "Link",
+   "label": "المقعد",
+   "options": "Seat",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "الحالة",
+   "options": "متاح\nمحجوز\nمباع\nغير متاح",
+   "reqd": 1,
+   "default": "متاح",
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "price",
+   "fieldtype": "Currency",
+   "label": "السعر",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "currency",
+   "fieldtype": "Select",
+   "label": "العملة",
+   "options": "ريال يمني\nريال سعودي",
+   "reqd": 1,
+   "default": "ريال يمني"
+  },
+  {
+   "fieldname": "booking",
+   "fieldtype": "Link",
+   "label": "الحجز",
+   "options": "Booking",
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Small Text",
+   "label": "ملاحظات"
+  }
+ ],
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "export": 1,
+   "import": 1
+  },
+  {
+   "role": "Ticket Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "export": 1
+  },
+  {
+   "role": "Ticket Agent",
+   "read": 1,
+   "export": 1
+  },
+  {
+   "role": "Booking Staff",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "export": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "quick_entry": 0,
+ "track_views": 0
+}

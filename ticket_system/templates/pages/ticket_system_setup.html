@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="/assets/ticket_system/css/ticket_system.css">
+    <style>
+        .setup-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .setup-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .setup-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .setup-subtitle {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        .setup-stages {
+            margin-bottom: 30px;
+        }
+        .setup-stage {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            background-color: #f8f9fa;
+        }
+        .setup-stage-icon {
+            margin-left: 15px;
+            font-size: 20px;
+            width: 30px;
+            text-align: center;
+        }
+        .setup-stage-name {
+            flex-grow: 1;
+            font-weight: bold;
+        }
+        .setup-stage-status {
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .status-pending {
+            background-color: #f8f9fa;
+            color: #6c757d;
+        }
+        .status-running {
+            background-color: #cfe2ff;
+            color: #0d6efd;
+        }
+        .status-success {
+            background-color: #d1e7dd;
+            color: #198754;
+        }
+        .status-error {
+            background-color: #f8d7da;
+            color: #dc3545;
+        }
+        .setup-actions {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .setup-btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            border: none;
+            background-color: #0d6efd;
+            color: white;
+        }
+        .setup-btn:hover {
+            background-color: #0b5ed7;
+        }
+        .setup-btn:disabled {
+            background-color: #6c757d;
+            cursor: not-allowed;
+        }
+        .setup-log {
+            margin-top: 30px;
+            padding: 15px;
+            border-radius: 5px;
+            background-color: #f8f9fa;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .log-entry {
+            margin-bottom: 5px;
+            padding: 5px;
+            border-radius: 3px;
+        }
+        .log-info {
+            background-color: #f8f9fa;
+        }
+        .log-success {
+            background-color: #d1e7dd;
+        }
+        .log-error {
+            background-color: #f8d7da;
+        }
+    </style>
+</head>
+<body>
+    <div class="setup-container">
+        <div class="setup-header">
+            <div class="setup-title">إعداد نظام حجز التذاكر</div>
+            <div class="setup-subtitle">اتبع الخطوات التالية لإعداد النظام</div>
+        </div>
+        
+        <div class="setup-stages">
+            {% for stage in setup_stages %}
+            <div class="setup-stage" id="stage-{{ loop.index }}">
+                <div class="setup-stage-icon">
+                    <i class="{{ stage.icon }}"></i>
+                </div>
+                <div class="setup-stage-name">{{ stage.name }}</div>
+                <div class="setup-stage-status status-{{ stage.status }}" id="status-{{ loop.index }}">
+                    {% if stage.status == "pending" %}
+                    قيد الانتظار
+                    {% elif stage.status == "running" %}
+                    جاري التنفيذ
+                    {% elif stage.status == "success" %}
+                    تم بنجاح
+                    {% elif stage.status == "error" %}
+                    فشل
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="setup-actions">
+            <button id="setup-btn" class="setup-btn">بدء الإعداد</button>
+        </div>
+        
+        <div class="setup-log" id="setup-log" style="display: none;">
+            <div id="log-entries"></div>
+        </div>
+    </div>
+    
+    <script>
+        frappe.ready(function() {
+            var setupBtn = document.getElementById('setup-btn');
+            var setupLog = document.getElementById('setup-log');
+            var logEntries = document.getElementById('log-entries');
+            
+            setupBtn.addEventListener('click', function() {
+                setupBtn.disabled = true;
+                setupBtn.innerText = 'جاري الإعداد...';
+                setupLog.style.display = 'block';
+                
+                // إضافة سجل بدء الإعداد
+                addLogEntry('بدء عملية إعداد نظام حجز التذاكر...', 'info');
+                
+                // تحديث حالة المرحلة الأولى
+                updateStageStatus(1, 'running');
+                
+                // تشغيل عملية الإعداد
+                frappe.call({
+                    method: 'ticket_system.templates.pages.ticket_system_setup.run_setup',
+                    callback: function(r) {
+                        if (r.message && r.message.status === 'success') {
+                            setupBtn.innerText = 'تم الإعداد بنجاح';
+                            addLogEntry(r.message.message, 'success');
+                        } else {
+                            setupBtn.innerText = 'فشل الإعداد';
+                            setupBtn.disabled = false;
+                            addLogEntry(r.message.message || 'حدث خطأ أثناء الإعداد', 'error');
+                        }
+                    }
+                });
+            });
+            
+            // الاستماع لأحداث التقدم في الإعداد
+            frappe.realtime.on('setup_task', function(data) {
+                var stageIndex = getStageIndex(data.status);
+                
+                if (stageIndex > 0) {
+                    // تحديث حالة المرحلة الحالية
+                    if (data.message === 'جاري التنفيذ...') {
+                        updateStageStatus(stageIndex, 'running');
+                        addLogEntry('بدء ' + data.status + '...', 'info');
+                    } else if (data.message.includes('فشل')) {
+                        updateStageStatus(stageIndex, 'error');
+                        addLogEntry(data.message, 'error');
+                        if (data.exception) {
+                            addLogEntry(data.exception, 'error');
+                        }
+                    } else if (data.status === 'اكتمل') {
+                        // تحديث جميع المراحل كناجحة
+                        for (var i = 1; i <= 3; i++) {
+                            updateStageStatus(i, 'success');
+                        }
+                        addLogEntry(data.message, 'success');
+                    } else {
+                        updateStageStatus(stageIndex, 'success');
+                        addLogEntry('تم ' + data.status + ' بنجاح', 'success');
+                        
+                        // تحديث المرحلة التالية إذا وجدت
+                        if (stageIndex < 3) {
+                            updateStageStatus(stageIndex + 1, 'running');
+                        }
+                    }
+                }
+            });
+            
+            function getStageIndex(stageName) {
+                switch (stageName) {
+                    case 'الإعدادات الأساسية':
+                        return 1;
+                    case 'الأدوار والأذونات':
+                        return 2;
+                    case 'البيانات الأولية':
+                        return 3;
+                    case 'اكتمل':
+                        return 3;
+                    default:
+                        return 0;
+                }
+            }
+            
+            function updateStageStatus(index, status) {
+                var stageStatus = document.getElementById('status-' + index);
+                var stageElement = document.getElementById('stage-' + index);
+                
+                // إزالة الفئات الحالية
+                stageStatus.classList.remove('status-pending', 'status-running', 'status-success', 'status-error');
+                
+                // إضافة الفئة الجديدة
+                stageStatus.classList.add('status-' + status);
+                
+                // تحديث النص
+                if (status === 'pending') {
+                    stageStatus.innerText = 'قيد الانتظار';
+                } else if (status === 'running') {
+                    stageStatus.innerText = 'جاري التنفيذ';
+                } else if (status === 'success') {
+                    stageStatus.innerText = 'تم بنجاح';
+                } else if (status === 'error') {
+                    stageStatus.innerText = 'فشل';
+                }
+            }
+            
+            function addLogEntry(message, type) {
+                var entry = document.createElement('div');
+                entry.className = 'log-entry log-' + type;
+                entry.innerText = message;
+                
+                logEntries.appendChild(entry);
+                
+                // التمرير إلى أسفل
+                setupLog.scrollTop = setupLog.scrollHeight;
+            }
+        });
+    </script>
+</body>
+</html>

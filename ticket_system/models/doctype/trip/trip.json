@@ -1,0 +1,148 @@
+{
+ "doctype": "DocType",
+ "name": "Trip",
+ "module": "Ticket System",
+ "custom": 0,
+ "autoname": "field:trip_code",
+ "naming_rule": "By fieldname",
+ "title_field": "trip_code",
+ "search_fields": "trip_code,route,trip_date,vehicle_type",
+ "allow_rename": 0,
+ "is_submittable": 0,
+ "is_tree": 0,
+ "track_changes": 1,
+ "track_seen": 0,
+ "fields": [
+  {
+   "fieldname": "trip_code",
+   "fieldtype": "Data",
+   "label": "رقم الرحلة",
+   "reqd": 1,
+   "unique": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "route",
+   "fieldtype": "Link",
+   "label": "المسار",
+   "options": "Route",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "trip_date",
+   "fieldtype": "Date",
+   "label": "تاريخ الرحلة",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "departure_time",
+   "fieldtype": "Time",
+   "label": "وقت المغادرة",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "arrival_time",
+   "fieldtype": "Time",
+   "label": "وقت الوصول",
+   "reqd": 1
+  },
+  {
+   "fieldname": "vehicle_type",
+   "fieldtype": "Select",
+   "label": "نوع المركبة",
+   "options": "سياحي (VIP)\nعادي",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "total_seats",
+   "fieldtype": "Int",
+   "label": "عدد المقاعد الكلي",
+   "reqd": 1,
+   "default": 45
+  },
+  {
+   "fieldname": "available_seats",
+   "fieldtype": "Int",
+   "label": "المقاعد المتاحة",
+   "read_only": 1
+  },
+  {
+   "fieldname": "price",
+   "fieldtype": "Currency",
+   "label": "السعر",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "currency",
+   "fieldtype": "Select",
+   "label": "العملة",
+   "options": "ريال يمني\nريال سعودي",
+   "reqd": 1,
+   "default": "ريال يمني"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "الحالة",
+   "options": "مجدولة\nقيد التنفيذ\nمكتملة\nملغاة\nمعاد جدولتها",
+   "reqd": 1,
+   "default": "مجدولة",
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Text Editor",
+   "label": "ملاحظات"
+  }
+ ],
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "export": 1,
+   "import": 1
+  },
+  {
+   "role": "Ticket Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "export": 1
+  },
+  {
+   "role": "Ticket Agent",
+   "read": 1,
+   "write": 0,
+   "create": 0,
+   "delete": 0,
+   "export": 1
+  },
+  {
+   "role": "Booking Staff",
+   "read": 1,
+   "write": 0,
+   "create": 0,
+   "delete": 0,
+   "export": 1
+  }
+ ],
+ "sort_field": "trip_date",
+ "sort_order": "DESC",
+ "quick_entry": 0,
+ "track_views": 1
+}

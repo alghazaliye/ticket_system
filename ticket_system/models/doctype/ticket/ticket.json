@@ -1,0 +1,164 @@
+{
+ "doctype": "DocType",
+ "name": "Ticket",
+ "module": "Ticket System",
+ "custom": 0,
+ "autoname": "field:ticket_number",
+ "naming_rule": "By fieldname",
+ "title_field": "ticket_number",
+ "search_fields": "ticket_number,passenger_name,trip,booking_date",
+ "allow_rename": 0,
+ "is_submittable": 0,
+ "is_tree": 0,
+ "track_changes": 1,
+ "track_seen": 1,
+ "fields": [
+  {
+   "fieldname": "ticket_number",
+   "fieldtype": "Data",
+   "label": "رقم التذكرة",
+   "reqd": 1,
+   "unique": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "trip",
+   "fieldtype": "Link",
+   "label": "الرحلة",
+   "options": "Trip",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "seat_number",
+   "fieldtype": "Int",
+   "label": "رقم المقعد",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "passenger_name",
+   "fieldtype": "Data",
+   "label": "اسم الراكب",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "passenger_id_type",
+   "fieldtype": "Select",
+   "label": "نوع هوية الراكب",
+   "options": "بطاقة شخصية\nجواز سفر\nرخصة قيادة\nأخرى",
+   "reqd": 1
+  },
+  {
+   "fieldname": "passenger_id_number",
+   "fieldtype": "Data",
+   "label": "رقم هوية الراكب",
+   "reqd": 1
+  },
+  {
+   "fieldname": "booking_date",
+   "fieldtype": "Datetime",
+   "label": "تاريخ الحجز",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "issue_date",
+   "fieldtype": "Datetime",
+   "label": "تاريخ الإصدار",
+   "reqd": 1
+  },
+  {
+   "fieldname": "price",
+   "fieldtype": "Currency",
+   "label": "السعر",
+   "reqd": 1
+  },
+  {
+   "fieldname": "currency",
+   "fieldtype": "Select",
+   "label": "العملة",
+   "options": "ريال يمني\nريال سعودي",
+   "reqd": 1,
+   "default": "ريال يمني"
+  },
+  {
+   "fieldname": "agent",
+   "fieldtype": "Link",
+   "label": "الوكيل",
+   "options": "Agent"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "الحالة",
+   "options": "صالحة\nمستخدمة\nملغاة",
+   "reqd": 1,
+   "default": "صالحة",
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "barcode",
+   "fieldtype": "Data",
+   "label": "الباركود",
+   "read_only": 1
+  },
+  {
+   "fieldname": "qr_code",
+   "fieldtype": "Attach Image",
+   "label": "رمز الاستجابة السريعة",
+   "read_only": 1
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Text Editor",
+   "label": "ملاحظات"
+  }
+ ],
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "export": 1,
+   "import": 1
+  },
+  {
+   "role": "Ticket Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "export": 1
+  },
+  {
+   "role": "Ticket Agent",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "export": 1
+  },
+  {
+   "role": "Booking Staff",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "export": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "quick_entry": 0,
+ "track_views": 1
+}

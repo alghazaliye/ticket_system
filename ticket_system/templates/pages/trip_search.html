@@ -1,0 +1,74 @@
+{% extends "templates/web.html" %}
+
+{% block title %}البحث عن الرحلات{% endblock %}
+
+{% block page_content %}
+<div class="ticket-system-container">
+    <div class="ticket-system-card">
+        <div class="ticket-system-header">
+            <div class="ticket-system-title">البحث عن الرحلات</div>
+            <div class="ticket-system-subtitle">ابحث عن الرحلات المتاحة واحجز تذاكرك</div>
+        </div>
+        
+        <form id="trip-search-form" class="ticket-system-form">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="ticket-system-form-group">
+                        <label class="ticket-system-label" for="from-city">من</label>
+                        <select class="ticket-system-select" id="from-city" name="from_city" required>
+                            <option value="">اختر المدينة المصدر</option>
+                            {% for city in cities %}
+                            <option value="{{ city.name }}">{{ city.city_name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="ticket-system-form-group">
+                        <label class="ticket-system-label" for="to-city">إلى</label>
+                        <select class="ticket-system-select" id="to-city" name="to_city" required>
+                            <option value="">اختر الوجهة</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="ticket-system-form-group">
+                        <label class="ticket-system-label" for="trip-date">تاريخ الرحلة</label>
+                        <input type="date" class="ticket-system-input date-picker" id="trip-date" name="trip_date" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="ticket-system-form-group">
+                        <label class="ticket-system-label" for="vehicle-type">نوع المركبة</label>
+                        <select class="ticket-system-select" id="vehicle-type" name="vehicle_type">
+                            <option value="">جميع أنواع المركبات</option>
+                            <option value="سياحي (VIP)">سياحي (VIP)</option>
+                            <option value="عادي">عادي</option>
+                            <option value="مكيف">مكيف</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="ticket-system-form-actions">
+                <button type="submit" class="ticket-system-btn ticket-system-btn-primary">بحث</button>
+            </div>
+        </form>
+    </div>
+    
+    <div id="alert-container"></div>
+    
+    <div id="search-results"></div>
+</div>
+{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="/assets/ticket_system/css/ticket_system.css">
+{% endblock %}
+
+{% block script %}
+<script src="/assets/ticket_system/js/ticket_system.js"></script>
+{% endblock %}

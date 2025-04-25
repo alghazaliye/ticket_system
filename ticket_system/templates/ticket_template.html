@@ -1,0 +1,90 @@
+{% extends "templates/web.html" %}
+
+{% block title %}طباعة التذكرة{% endblock %}
+
+{% block page_content %}
+<div class="ticket-system-container ticket-system-ticket-print">
+    <div class="ticket-system-ticket">
+        <div class="ticket-system-ticket-header">
+            <div class="ticket-system-ticket-title">
+                {{ ticket.from_city_name }} إلى {{ ticket.to_city_name }}
+            </div>
+            <div class="ticket-system-ticket-number">
+                رقم التذكرة: {{ ticket.ticket.ticket_number }}
+            </div>
+        </div>
+        
+        <div class="ticket-system-ticket-details">
+            <div class="ticket-system-ticket-detail">
+                <div class="ticket-system-trip-detail-label">اسم الراكب</div>
+                <div class="ticket-system-trip-detail-value">{{ ticket.ticket.passenger_name }}</div>
+            </div>
+            <div class="ticket-system-ticket-detail">
+                <div class="ticket-system-trip-detail-label">رقم المقعد</div>
+                <div class="ticket-system-trip-detail-value">{{ ticket.ticket.seat_number }}</div>
+            </div>
+            <div class="ticket-system-ticket-detail">
+                <div class="ticket-system-trip-detail-label">رقم الرحلة</div>
+                <div class="ticket-system-trip-detail-value">{{ ticket.trip.trip_code }}</div>
+            </div>
+            <div class="ticket-system-ticket-detail">
+                <div class="ticket-system-trip-detail-label">تاريخ الرحلة</div>
+                <div class="ticket-system-trip-detail-value">{{ ticket.trip.trip_date }}</div>
+            </div>
+            <div class="ticket-system-ticket-detail">
+                <div class="ticket-system-trip-detail-label">وقت المغادرة</div>
+                <div class="ticket-system-trip-detail-value">{{ ticket.trip.departure_time }}</div>
+            </div>
+            <div class="ticket-system-ticket-detail">
+                <div class="ticket-system-trip-detail-label">وقت الوصول</div>
+                <div class="ticket-system-trip-detail-value">{{ ticket.trip.arrival_time }}</div>
+            </div>
+            <div class="ticket-system-ticket-detail">
+                <div class="ticket-system-trip-detail-label">السعر</div>
+                <div class="ticket-system-trip-detail-value">{{ ticket.ticket.price }} {{ ticket.ticket.currency }}</div>
+            </div>
+            <div class="ticket-system-ticket-detail">
+                <div class="ticket-system-trip-detail-label">تاريخ الإصدار</div>
+                <div class="ticket-system-trip-detail-value">{{ ticket.ticket.issue_date }}</div>
+            </div>
+        </div>
+        
+        <div class="ticket-system-ticket-qr">
+            <img src="{{ qr_path }}" alt="رمز QR للتذكرة">
+        </div>
+        
+        <div class="ticket-system-ticket-footer">
+            <p>هذه التذكرة صالحة للرحلة المذكورة فقط. يرجى الاحتفاظ بها وإبرازها عند الصعود.</p>
+            <p>للاستفسارات، يرجى الاتصال على الرقم: 123456789</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="/assets/ticket_system/css/ticket_system.css">
+<style>
+    @media print {
+        body * {
+            visibility: hidden;
+        }
+        .ticket-system-ticket-print, .ticket-system-ticket-print * {
+            visibility: visible;
+        }
+        .ticket-system-ticket-print {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block script %}
+<script>
+    $(document).ready(function() {
+        window.print();
+    });
+</script>
+{% endblock %}

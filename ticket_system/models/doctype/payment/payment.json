@@ -1,0 +1,148 @@
+{
+ "doctype": "DocType",
+ "name": "Payment",
+ "module": "Ticket System",
+ "custom": 0,
+ "autoname": "field:payment_number",
+ "naming_rule": "By fieldname",
+ "title_field": "payment_number",
+ "search_fields": "payment_number,booking,payment_date,amount",
+ "allow_rename": 0,
+ "is_submittable": 1,
+ "is_tree": 0,
+ "track_changes": 1,
+ "track_seen": 0,
+ "fields": [
+  {
+   "fieldname": "payment_number",
+   "fieldtype": "Data",
+   "label": "رقم الدفعة",
+   "reqd": 1,
+   "unique": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "booking",
+   "fieldtype": "Link",
+   "label": "الحجز",
+   "options": "Booking",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "payment_date",
+   "fieldtype": "Datetime",
+   "label": "تاريخ الدفع",
+   "reqd": 1,
+   "default": "now",
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "payment_method",
+   "fieldtype": "Select",
+   "label": "طريقة الدفع",
+   "options": "نقداً\nبطاقة ائتمان\nتحويل بنكي\nدفع إلكتروني",
+   "reqd": 1,
+   "default": "نقداً",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "amount",
+   "fieldtype": "Currency",
+   "label": "المبلغ",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "currency",
+   "fieldtype": "Select",
+   "label": "العملة",
+   "options": "ريال يمني\nريال سعودي",
+   "reqd": 1,
+   "default": "ريال يمني"
+  },
+  {
+   "fieldname": "transaction_id",
+   "fieldtype": "Data",
+   "label": "رقم المعاملة",
+   "depends_on": "eval:doc.payment_method != 'نقداً'"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "الحالة",
+   "options": "ناجح\nفاشل\nمعلق",
+   "reqd": 1,
+   "default": "ناجح",
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "received_by",
+   "fieldtype": "Link",
+   "label": "استلم بواسطة",
+   "options": "User",
+   "reqd": 1
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Text Editor",
+   "label": "ملاحظات"
+  }
+ ],
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "submit": 1,
+   "cancel": 1,
+   "amend": 1,
+   "export": 1,
+   "import": 1
+  },
+  {
+   "role": "Ticket Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "submit": 1,
+   "cancel": 1,
+   "amend": 1,
+   "export": 1
+  },
+  {
+   "role": "Ticket Agent",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "submit": 1,
+   "cancel": 0,
+   "amend": 0,
+   "export": 1
+  },
+  {
+   "role": "Booking Staff",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "submit": 1,
+   "cancel": 0,
+   "amend": 0,
+   "export": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "quick_entry": 0,
+ "track_views": 0
+}

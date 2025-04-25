@@ -1,0 +1,131 @@
+{
+ "doctype": "DocType",
+ "name": "Agent",
+ "module": "Ticket System",
+ "custom": 0,
+ "autoname": "field:agent_code",
+ "naming_rule": "By fieldname",
+ "title_field": "agent_name",
+ "search_fields": "agent_name,agent_code,contact_person,phone",
+ "allow_rename": 1,
+ "is_submittable": 0,
+ "is_tree": 0,
+ "track_changes": 1,
+ "track_seen": 0,
+ "fields": [
+  {
+   "fieldname": "agent_name",
+   "fieldtype": "Data",
+   "label": "اسم الوكيل",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "agent_code",
+   "fieldtype": "Data",
+   "label": "رمز الوكيل",
+   "reqd": 1,
+   "unique": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "agent_type",
+   "fieldtype": "Select",
+   "label": "نوع الوكيل",
+   "options": "فردي\nشركة",
+   "reqd": 1,
+   "default": "فردي",
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "contact_person",
+   "fieldtype": "Data",
+   "label": "الشخص المسؤول",
+   "depends_on": "eval:doc.agent_type=='شركة'"
+  },
+  {
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "label": "البريد الإلكتروني",
+   "options": "Email"
+  },
+  {
+   "fieldname": "phone",
+   "fieldtype": "Data",
+   "label": "رقم الهاتف",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "address",
+   "fieldtype": "Small Text",
+   "label": "العنوان"
+  },
+  {
+   "fieldname": "commission_rate",
+   "fieldtype": "Percent",
+   "label": "نسبة العمولة",
+   "reqd": 1,
+   "default": 5
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "الحالة",
+   "options": "نشط\nغير نشط",
+   "reqd": 1,
+   "default": "نشط",
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "credit_limit",
+   "fieldtype": "Currency",
+   "label": "حد الائتمان",
+   "default": 0
+  },
+  {
+   "fieldname": "current_balance",
+   "fieldtype": "Currency",
+   "label": "الرصيد الحالي",
+   "default": 0,
+   "read_only": 1
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Text Editor",
+   "label": "ملاحظات"
+  }
+ ],
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "export": 1,
+   "import": 1
+  },
+  {
+   "role": "Ticket Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "export": 1
+  },
+  {
+   "role": "Booking Staff",
+   "read": 1,
+   "export": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "quick_entry": 0,
+ "track_views": 0
+}

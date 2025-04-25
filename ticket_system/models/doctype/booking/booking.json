@@ -1,0 +1,212 @@
+{
+ "doctype": "DocType",
+ "name": "Booking",
+ "module": "Ticket System",
+ "custom": 0,
+ "autoname": "field:booking_number",
+ "naming_rule": "By fieldname",
+ "title_field": "booking_number",
+ "search_fields": "booking_number,customer,trip,booking_date",
+ "allow_rename": 0,
+ "is_submittable": 1,
+ "is_tree": 0,
+ "track_changes": 1,
+ "track_seen": 1,
+ "fields": [
+  {
+   "fieldname": "booking_number",
+   "fieldtype": "Data",
+   "label": "رقم الحجز",
+   "reqd": 1,
+   "unique": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "label": "العميل",
+   "options": "Customer",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "trip",
+   "fieldtype": "Link",
+   "label": "الرحلة",
+   "options": "Trip",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "booking_date",
+   "fieldtype": "Datetime",
+   "label": "تاريخ الحجز",
+   "reqd": 1,
+   "default": "now",
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "seats_section",
+   "fieldtype": "Section Break",
+   "label": "المقاعد"
+  },
+  {
+   "fieldname": "seats",
+   "fieldtype": "Table",
+   "label": "المقاعد",
+   "options": "Booking Seat",
+   "reqd": 1
+  },
+  {
+   "fieldname": "payment_section",
+   "fieldtype": "Section Break",
+   "label": "معلومات الدفع"
+  },
+  {
+   "fieldname": "total_amount",
+   "fieldtype": "Currency",
+   "label": "المبلغ الإجمالي",
+   "reqd": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "paid_amount",
+   "fieldtype": "Currency",
+   "label": "المبلغ المدفوع",
+   "reqd": 1,
+   "default": 0
+  },
+  {
+   "fieldname": "balance",
+   "fieldtype": "Currency",
+   "label": "الرصيد المتبقي",
+   "read_only": 1
+  },
+  {
+   "fieldname": "currency",
+   "fieldtype": "Select",
+   "label": "العملة",
+   "options": "ريال يمني\nريال سعودي",
+   "reqd": 1,
+   "default": "ريال يمني"
+  },
+  {
+   "fieldname": "payment_method",
+   "fieldtype": "Select",
+   "label": "طريقة الدفع",
+   "options": "نقداً\nبطاقة ائتمان\nتحويل بنكي\nدفع إلكتروني",
+   "reqd": 1,
+   "default": "نقداً"
+  },
+  {
+   "fieldname": "agent_section",
+   "fieldtype": "Section Break",
+   "label": "معلومات الوكيل"
+  },
+  {
+   "fieldname": "agent",
+   "fieldtype": "Link",
+   "label": "الوكيل",
+   "options": "Agent",
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "commission_rate",
+   "fieldtype": "Percent",
+   "label": "نسبة العمولة",
+   "depends_on": "eval:doc.agent"
+  },
+  {
+   "fieldname": "commission_amount",
+   "fieldtype": "Currency",
+   "label": "مبلغ العمولة",
+   "read_only": 1,
+   "depends_on": "eval:doc.agent"
+  },
+  {
+   "fieldname": "status_section",
+   "fieldtype": "Section Break",
+   "label": "الحالة"
+  },
+  {
+   "fieldname": "booking_status",
+   "fieldtype": "Select",
+   "label": "حالة الحجز",
+   "options": "مؤقت\nمؤكد\nملغى",
+   "reqd": 1,
+   "default": "مؤقت",
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "payment_status",
+   "fieldtype": "Select",
+   "label": "حالة الدفع",
+   "options": "غير مدفوع\nمدفوع جزئياً\nمدفوع بالكامل",
+   "reqd": 1,
+   "default": "غير مدفوع",
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Text Editor",
+   "label": "ملاحظات"
+  }
+ ],
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "submit": 1,
+   "cancel": 1,
+   "amend": 1,
+   "export": 1,
+   "import": 1
+  },
+  {
+   "role": "Ticket Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "submit": 1,
+   "cancel": 1,
+   "amend": 1,
+   "export": 1
+  },
+  {
+   "role": "Ticket Agent",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "submit": 1,
+   "cancel": 1,
+   "amend": 1,
+   "export": 1
+  },
+  {
+   "role": "Booking Staff",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "submit": 1,
+   "cancel": 1,
+   "amend": 1,
+   "export": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "quick_entry": 0,
+ "track_views": 1
+}

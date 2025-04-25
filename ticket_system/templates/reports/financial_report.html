@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>التقرير المالي</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+            direction: rtl;
+        }
+        .report-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .report-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .report-subtitle {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        .report-summary {
+            margin-bottom: 30px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        .summary-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .summary-row {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+        .summary-item {
+            flex: 1 0 25%;
+            margin-bottom: 10px;
+        }
+        .summary-label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .summary-value {
+            color: #1a73e8;
+        }
+        .report-section {
+            margin-bottom: 30px;
+        }
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #dee2e6;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #dee2e6;
+            padding: 8px 12px;
+            text-align: right;
+        }
+        th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .chart-container {
+            margin-bottom: 30px;
+        }
+        .footer {
+            margin-top: 50px;
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="report-header">
+        <div class="report-title">التقرير المالي</div>
+        <div class="report-subtitle">
+            الفترة: {{ report.from_date|date }} إلى {{ report.to_date|date }}
+        </div>
+        <div class="report-subtitle">
+            تاريخ التقرير: {{ frappe.utils.now()|date }}
+        </div>
+    </div>
+
+    <div class="report-summary">
+        <div class="summary-title">ملخص مالي</div>
+        <div class="summary-row">
+            <div class="summary-item">
+                <div class="summary-label">إجمالي الإيرادات</div>
+                <div class="summary-value">{{ report.total_revenue }}</div>
+            </div>
+            <div class="summary-item">
+                <div class="summary-label">إجمالي المصروفات</div>
+                <div class="summary-value">{{ report.total_expenses }}</div>
+            </div>
+            <div class="summary-item">
+                <div class="summary-label">صافي الدخل</div>
+                <div class="summary-value">{{ report.net_income }}</div>
+            </div>
+        </div>
+        <div class="summary-row">
+            <div class="summary-item">
+                <div class="summary-label">إجمالي المستلم</div>
+                <div class="summary-value">{{ report.total_received }}</div>
+            </div>
+            <div class="summary-item">
+                <div class="summary-label">إجمالي المستحق</div>
+                <div class="summary-value">{{ report.total_receivable }}</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="report-section">
+        <div class="section-title">الإيرادات حسب التاريخ</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>التاريخ</th>
+                    <th>المبلغ</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for date, amount in report.revenue_by_date.items() %}
+                <tr>
+                    <td>{{ date }}</td>
+                    <td>{{ amount }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="report-section">
+        <div class="section-title">الإيرادات حسب الوكيل</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>الوكيل</th>
+                    <th>المبلغ</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for agent, amount in report.revenue_by_agent.items() %}
+                <tr>
+                    <td>{{ agent }}</td>
+                    <td>{{ amount }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="report-section">
+        <div class="section-title">المعاملات المالية</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>التاريخ</th>
+                    <th>النوع</th>
+                    <th>المرجع</th>
+                    <th>الوصف</th>
+                    <th>العميل</th>
+                    <th>الوكيل</th>
+                    <th>مدين</th>
+                    <th>دائن</th>
+                    <th>المبلغ المدفوع</th>
+                    <th>الحالة</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for transaction in report.transactions %}
+                <tr>
+                    <td>{{ transaction.date|date }}</td>
+                    <td>{{ transaction.type }}</td>
+                    <td>{{ transaction.reference }}</td>
+                    <td>{{ transaction.description }}</td>
+                    <td>{{ transaction.customer or "" }}</td>
+                    <td>{{ transaction.agent or "" }}</td>
+                    <td>{{ transaction.debit }}</td>
+                    <td>{{ transaction.credit }}</td>
+                    <td>{{ transaction.paid_amount }}</td>
+                    <td>{{ transaction.status }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="footer">
+        <p>تم إنشاء هذا التقرير بواسطة نظام حجز التذاكر</p>
+    </div>
+</body>
+</html>

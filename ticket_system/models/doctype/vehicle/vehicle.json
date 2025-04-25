@@ -1,0 +1,131 @@
+{
+ "doctype": "DocType",
+ "name": "Vehicle",
+ "module": "Ticket System",
+ "custom": 0,
+ "autoname": "field:vehicle_number",
+ "naming_rule": "By fieldname",
+ "title_field": "vehicle_number",
+ "search_fields": "vehicle_number,vehicle_type,model,capacity",
+ "allow_rename": 0,
+ "is_submittable": 0,
+ "is_tree": 0,
+ "track_changes": 1,
+ "track_seen": 0,
+ "fields": [
+  {
+   "fieldname": "vehicle_number",
+   "fieldtype": "Data",
+   "label": "رقم المركبة",
+   "reqd": 1,
+   "unique": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "vehicle_type",
+   "fieldtype": "Select",
+   "label": "نوع المركبة",
+   "options": "حافلة\nقطار\nطائرة\nسيارة\nأخرى",
+   "reqd": 1,
+   "default": "حافلة",
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "capacity",
+   "fieldtype": "Int",
+   "label": "السعة (عدد المقاعد)",
+   "reqd": 1,
+   "default": 45,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "model",
+   "fieldtype": "Data",
+   "label": "الطراز",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "year",
+   "fieldtype": "Int",
+   "label": "سنة الصنع",
+   "reqd": 1
+  },
+  {
+   "fieldname": "license_plate",
+   "fieldtype": "Data",
+   "label": "لوحة الترخيص",
+   "reqd": 1
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "الحالة",
+   "options": "متاحة\nفي الصيانة\nفي الخدمة\nغير متاحة",
+   "reqd": 1,
+   "default": "متاحة",
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "maintenance_section",
+   "fieldtype": "Section Break",
+   "label": "معلومات الصيانة"
+  },
+  {
+   "fieldname": "last_maintenance_date",
+   "fieldtype": "Date",
+   "label": "تاريخ آخر صيانة"
+  },
+  {
+   "fieldname": "next_maintenance_date",
+   "fieldtype": "Date",
+   "label": "تاريخ الصيانة القادمة"
+  },
+  {
+   "fieldname": "maintenance_notes",
+   "fieldtype": "Small Text",
+   "label": "ملاحظات الصيانة"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Text Editor",
+   "label": "ملاحظات عامة"
+  }
+ ],
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "export": 1,
+   "import": 1
+  },
+  {
+   "role": "Ticket Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "export": 1
+  },
+  {
+   "role": "Ticket Agent",
+   "read": 1,
+   "export": 1
+  },
+  {
+   "role": "Booking Staff",
+   "read": 1,
+   "export": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "quick_entry": 0,
+ "track_views": 0
+}

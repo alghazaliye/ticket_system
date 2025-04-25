@@ -1,0 +1,71 @@
+{
+ "doctype": "DocType",
+ "name": "Booking Seat",
+ "module": "Ticket System",
+ "custom": 0,
+ "istable": 1,
+ "track_changes": 1,
+ "fields": [
+  {
+   "fieldname": "seat_number",
+   "fieldtype": "Int",
+   "label": "رقم المقعد",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "seat_type",
+   "fieldtype": "Select",
+   "label": "نوع المقعد",
+   "options": "عادي\nVIP\nممر\nنافذة",
+   "reqd": 1,
+   "default": "عادي",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "passenger_name",
+   "fieldtype": "Data",
+   "label": "اسم الراكب",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "passenger_id_type",
+   "fieldtype": "Select",
+   "label": "نوع هوية الراكب",
+   "options": "بطاقة شخصية\nجواز سفر\nرخصة قيادة\nأخرى",
+   "reqd": 1
+  },
+  {
+   "fieldname": "passenger_id_number",
+   "fieldtype": "Data",
+   "label": "رقم هوية الراكب",
+   "reqd": 1
+  },
+  {
+   "fieldname": "price",
+   "fieldtype": "Currency",
+   "label": "السعر",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "الحالة",
+   "options": "محجوز\nمؤكد\nملغى",
+   "reqd": 1,
+   "default": "محجوز",
+   "in_list_view": 1
+  }
+ ],
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1
+  }
+ ]
+}

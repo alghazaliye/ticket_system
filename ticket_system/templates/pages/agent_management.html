@@ -1,0 +1,54 @@
+{% extends "templates/web.html" %}
+
+{% block title %}إدارة الوكلاء{% endblock %}
+
+{% block page_content %}
+<div class="ticket-system-container">
+    <div class="ticket-system-card">
+        <div class="ticket-system-header">
+            <div class="ticket-system-title">البحث عن وكيل</div>
+            <div class="ticket-system-subtitle">اختر الوكيل لعرض تفاصيله</div>
+        </div>
+        
+        <div class="ticket-system-form">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="ticket-system-form-group">
+                        <label class="ticket-system-label" for="agent-id">الوكيل</label>
+                        <select class="ticket-system-select" id="agent-id" required>
+                            <option value="">اختر الوكيل</option>
+                            {% for agent in agents %}
+                            <option value="{{ agent.name }}">{{ agent.agent_name }} ({{ agent.agent_code }})</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="ticket-system-form-group">
+                        <label class="ticket-system-label">&nbsp;</label>
+                        <button id="agent-search-btn" class="ticket-system-btn ticket-system-btn-primary">عرض</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="alert-container"></div>
+    
+    <div id="agent-details"></div>
+    
+    <div id="statement-form" style="display: none;"></div>
+    <div id="statement-result" style="display: none;"></div>
+    
+    <div id="payment-form" style="display: none;"></div>
+    <div id="payment-result" style="display: none;"></div>
+</div>
+{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="/assets/ticket_system/css/ticket_system.css">
+{% endblock %}
+
+{% block script %}
+<script src="/assets/ticket_system/js/ticket_system.js"></script>
+{% endblock %}

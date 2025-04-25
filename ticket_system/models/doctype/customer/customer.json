@@ -1,0 +1,141 @@
+{
+ "doctype": "DocType",
+ "name": "Customer",
+ "module": "Ticket System",
+ "custom": 0,
+ "autoname": "field:customer_id",
+ "naming_rule": "By fieldname",
+ "title_field": "full_name",
+ "search_fields": "full_name,phone,email,id_number",
+ "allow_rename": 0,
+ "is_submittable": 0,
+ "is_tree": 0,
+ "track_changes": 1,
+ "track_seen": 0,
+ "fields": [
+  {
+   "fieldname": "customer_id",
+   "fieldtype": "Data",
+   "label": "رقم العميل",
+   "reqd": 1,
+   "unique": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "first_name",
+   "fieldtype": "Data",
+   "label": "الاسم الأول",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "last_name",
+   "fieldtype": "Data",
+   "label": "الاسم الأخير",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "full_name",
+   "fieldtype": "Data",
+   "label": "الاسم الكامل",
+   "read_only": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "label": "البريد الإلكتروني",
+   "options": "Email",
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "phone",
+   "fieldtype": "Data",
+   "label": "رقم الهاتف",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "address",
+   "fieldtype": "Small Text",
+   "label": "العنوان"
+  },
+  {
+   "fieldname": "id_type",
+   "fieldtype": "Select",
+   "label": "نوع الهوية",
+   "options": "بطاقة شخصية\nجواز سفر\nرخصة قيادة\nأخرى",
+   "reqd": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "id_number",
+   "fieldtype": "Data",
+   "label": "رقم الهوية",
+   "reqd": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "registration_date",
+   "fieldtype": "Date",
+   "label": "تاريخ التسجيل",
+   "reqd": 1,
+   "default": "Today"
+  },
+  {
+   "fieldname": "loyalty_points",
+   "fieldtype": "Int",
+   "label": "نقاط الولاء",
+   "default": 0,
+   "read_only": 1
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Text Editor",
+   "label": "ملاحظات"
+  }
+ ],
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "export": 1,
+   "import": 1
+  },
+  {
+   "role": "Ticket Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "export": 1
+  },
+  {
+   "role": "Ticket Agent",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "export": 1
+  },
+  {
+   "role": "Booking Staff",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "export": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "quick_entry": 1,
+ "track_views": 0
+}
